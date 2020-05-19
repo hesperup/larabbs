@@ -14,9 +14,28 @@
       <!-- Right Side Of Navbar -->
       <ul class="navbar-nav navbar-right">
         <!-- Authentication Links -->
+        @guest
         <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">登录</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">注册</a></li>
-      </ul>
+
+        @else
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+        <img src="https://cn.gravatar.com/userimage/185281915/d09de69c4cdfa27df65078f7b105693b.jpeg"/></a>
+            {{ Auth::user()->name }} </a> <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="">个人中心</a>
+            <a class="dropdown-item" href="">编辑资料</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" id="logout" href="#">
+              <form action="{{ route('logout') }}" method="POST">
+                {{ csrf_field() }}
+                <button class="btn btn-block btn-danger" type="submit" name="button">退出</button>
+              </form>
+            </a>
     </div>
+    </li>
+    @endguest
+    </ul>
+  </div>
   </div>
 </nav>
