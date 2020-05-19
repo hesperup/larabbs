@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Topic;
 use DateTimeInterface;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
@@ -41,7 +42,7 @@ class User extends Authenticatable implements MustVerifyEmailContract
         'updated_at' => 'datetime:Y-m-d H:i:s',
     ];
 
-   /**
+    /**
      * 为数组 / JSON 序列化准备日期。
      *
      * @param  \DateTimeInterface  $date
@@ -52,4 +53,9 @@ class User extends Authenticatable implements MustVerifyEmailContract
         return $date->format($this->dateFormat ?: 'Y-m-d H:i:s');
     }
 
+
+    public function topics()
+    {
+        return $this->hasMany(Topic::class);
+    }
 }
