@@ -8,10 +8,10 @@
 @import "~bootstrap/scss/bootstrap";
 
 // Fontawesome
-@import '~@fortawesome/fontawesome-free/scss/fontawesome';
-@import '~@fortawesome/fontawesome-free/scss/regular';
-@import '~@fortawesome/fontawesome-free/scss/solid';
-@import '~@fortawesome/fontawesome-free/scss/brands';
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
 
 /* universal */
 body {
@@ -55,5 +55,15 @@ body {
         color: inherit;
       }
     }
+  }
+}
+
+/* User register page */
+.register-page {
+  img.captcha {
+    cursor: pointer;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 3px;
   }
 }
