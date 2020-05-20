@@ -13,6 +13,7 @@ class ReplyRequest extends Request
             {
                 return [
                     // CREATE ROLES
+                    'content'=>'required|min:2',
                 ];
             }
             // UPDATE
