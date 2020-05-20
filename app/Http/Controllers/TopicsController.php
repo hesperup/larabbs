@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Handlers\ImageUploadHandler;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -33,18 +34,18 @@ class TopicsController extends Controller
         $topics = $topic->withOrder($request->order)
             ->where('category_id', $category->id)
             ->paginate(20);
-        return view('topics.show', compact('topic','category'));
+        return view('topics.show', compact('topic', 'category'));
     }
 
     public function create(Topic $topic)
     {
         $categories = Category::all();
-        return view('topics.create_and_edit', compact('topic','categories'));
+        return view('topics.create_and_edit', compact('topic', 'categories'));
     }
 
-    public function store(TopicRequest $request,Topic $topic)
+    public function store(TopicRequest $request, Topic $topic)
     {
-        $topic ->fill($request->all());
+        $topic->fill($request->all());
         $topic->user_id = Auth::id();
         $topic->save();
         //$topic = Topic::create($request->all());
@@ -71,5 +72,24 @@ class TopicsController extends Controller
         $topic->delete();
 
         return redirect()->route('topics.index')->with('message', 'Deleted successfully.');
+    }
+
+    public function uploadImage(Request $request, ImageUploadHandler $uploader)
+    {
+        $data = [
+            'success' => false,
+            'msg' => '上传失败',
+            'file_path' => ''
+        ];
+
+        if ($file = $request->upload_file) {
+            $result = $uploader->save($request->upload_file, 'topic', Auth::id(), 1024);
+            if ($result) {
+                $data['file_path'] = $result['path'];
+                $data['msg'] = "上传成功!";
+                $data['success'] = true;
+            }
+
+        return $data;
     }
 }

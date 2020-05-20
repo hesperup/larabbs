@@ -12,7 +12,7 @@ class TopicObserver
     public function creating(Topic $topic)
     {
         //
-        $topic->excerpt = make_excerpt($topic->body);
+        $topic->excerpt = make_excerpt($topic->body,20);
     }
 
     public function updating(Topic $topic)
@@ -20,11 +20,6 @@ class TopicObserver
         //
     }
 
-    public function make_excerpt($value,$length =20)
-    {
-        $excerpt = trim(preg_replace('/\r\n|\r|\n+/',' ' ,strip_tags($value)));
-        return str_limit($excerpt, $length);
-        # code...
-    }
+
 
 }

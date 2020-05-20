@@ -22,6 +22,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.13.0"
+        "@fortawesome/fontawesome-free": "^5.13.0",
+        "simditor": "^2.3.28"
     }
 }
