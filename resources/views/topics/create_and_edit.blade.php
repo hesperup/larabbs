@@ -1,4 +1,21 @@
 @extends('layouts.app')
+@section('styles')
+<link rel="stylesheet" type="text/css" href="{{ asset('css/simditor.css') }}">
+@stop
+@section('scripts')
+<script type="text/javascript" src="{{ asset('js/module.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/hotkeys.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/uploader.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/simditor.js') }}"></script>
+<script>
+  $(document).ready(function () {
+    var editor = new Simditor({
+      textarea: $('#editor'),
+    });
+  });
+
+</script>
+@stop
 
 @section('content')
 
@@ -11,62 +28,62 @@
           Topic /
           @if($topic->id)
           Edit #{{ $topic->id }}
-          @else
-          Create
-          @endif
-        </h1>
-      </div> --}}
+      @else
+      Create
+      @endif
+      </h1>
+    </div> --}}
 
-      <div class="card-body">
+    <div class="card-body">
 
-        <h2 class="">
-          <i class="far fa-edit"></i>
-          @if($topic->id)
-          编辑话题
-          @else
-          新建话题
-          @endif
-        </h2>
-        <hr>
-
+      <h2 class="">
+        <i class="far fa-edit"></i>
         @if($topic->id)
-        <form action="{{ route('topics.update', $topic->id) }}" method="POST" accept-charset="UTF-8">
-          <input type="hidden" name="_method" value="PUT">
-          @else
-          <form action="{{ route('topics.store') }}" method="POST" accept-charset="UTF-8">
-            @endif
+        编辑话题
+        @else
+        新建话题
+        @endif
+      </h2>
+      <hr>
 
-            @include('common.error')
+      @if($topic->id)
+      <form action="{{ route('topics.update', $topic->id) }}" method="POST" accept-charset="UTF-8">
+        <input type="hidden" name="_method" value="PUT">
+        @else
+        <form action="{{ route('topics.store') }}" method="POST" accept-charset="UTF-8">
+          @endif
 
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          @include('common.error')
+
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 
-            <div class="form-group">
-              {{-- <label for="title-field">Title</label> --}}
-              <input class="form-control" type="text" name="title" id="title-field" placeholder=" 请填写标题"
-                value="{{ old('title', $topic->title ) }}" />
-            </div>
-            <div class="form-group">
-              {{-- <label for="category-field">Category</label> --}}
-              <select class="form-control" name="category_id" required>
-                <option value="" hidden disabled selected>请选择分类</option>
-                @foreach ($categories as $value)
-                <option value="{{ $value->id }}">{{ $value->name }}</option>
-                @endforeach
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="body-field">Body</label>
-              <textarea name="body" id="body-field" class="form-control"
-                rows="6"  placeholder="请填入至少三个字符的内容">{{ old('body', $topic->body ) }}</textarea>
-            </div>
+          <div class="form-group">
+            {{-- <label for="title-field">Title</label> --}}
+            <input class="form-control" type="text" name="title" id="title-field" placeholder=" 请填写标题"
+              value="{{ old('title', $topic->title ) }}" />
+          </div>
+          <div class="form-group">
+            {{-- <label for="category-field">Category</label> --}}
+            <select class="form-control" name="category_id" required>
+              <option value="" hidden disabled selected>请选择分类</option>
+              @foreach ($categories as $value)
+              <option value="{{ $value->id }}">{{ $value->name }}</option>
+              @endforeach
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="body-field">Body</label>
+            <textarea name="body" id="body-field" class="form-control" rows="6"
+              placeholder="请填入至少三个字符的内容">{{ old('body', $topic->body ) }}</textarea>
+          </div>
 
-            <div class="well well-sm">
-              <button type="submit" class="btn btn-primary">保存</button>
-            </div>
-          </form>
-         </div>
-        </div>
-      </div>
-     </div>
-     @endsection
+          <div class="well well-sm">
+            <button type="submit" class="btn btn-primary">保存</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+</div>
+@endsection
