@@ -69,7 +69,8 @@ body {
 }
 
 /* Topic Index Page */
-.topics-index-page, .categories-show-page {
+.topics-index-page,
+.categories-show-page {
   .topic-list {
     .nav > li > a {
       position: relative;
@@ -102,4 +103,20 @@ body {
 /* Add container and footer space */
 #app > div.container {
   margin-bottom: 100px;
+}
+
+simditor-body img {
+  max-width: 100%;
+}
+
+@import "topic_body";
+.topics-show-page {
+  .card {
+    padding: 15px;
+    h1 {
+      margin: 0.4em auto 0.6em;
+      font-size: 28px;
+      line-height: 38px;
+    }
+  }
 }

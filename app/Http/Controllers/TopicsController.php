@@ -89,7 +89,7 @@ class TopicsController extends Controller
                 $data['msg'] = "上传成功!";
                 $data['success'] = true;
             }
-
+        }
         return $data;
     }
 }
