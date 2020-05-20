@@ -16,6 +16,7 @@
         "intervention/image": "^2.5",
         "laravel/framework": "^7.0",
         "laravel/horizon": "^4.3",
+        "laravel/slack-notification-channel": "^2.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "mews/captcha": "^3.1",

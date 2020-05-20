@@ -7,6 +7,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Monolog\Handler\Slack\SlackRecord;
+use Illuminate\Notifications\Messages\SlackMessage;
 
 class TopicReplied extends Notification
 {
@@ -32,7 +34,7 @@ class TopicReplied extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'slack'];
     }
 
     /**
@@ -69,5 +71,25 @@ class TopicReplied extends Notification
         return [
             //
         ];
+    }
+
+    public function toMail($notifiable)
+    {
+        $url = $this->reply->topic->link(['#reply' . $this->reply->id]);
+        return (new MailMessage)
+            ->line('你的话题有新回复！')
+            ->action('查看回复', $url);
+    }
+
+    public function toSlack($notifiable)
+    {
+        $url = $this->reply->topic->link(['#reply' . $this->reply->id]);
+
+        return (new SlackMessage)
+            ->success()
+            ->content('你的话题有新回复！')
+            ->attachment(function ($attachment) use ($url) {
+                $attachment->title('查看回复', $url);
+            });
     }
 }

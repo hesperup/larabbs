@@ -75,9 +75,9 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
     public function notify($instance)
     {
-        if ($this->id == Auth::id()) {
-            return;
-        }
+        // if ($this->id == Auth::id()) {
+        //     return;
+        // }
         if (method_exists($instance, 'toDatabase')) {
             $this->increment('notification_count');
         }
@@ -91,5 +91,16 @@ class User extends Authenticatable implements MustVerifyEmailContract
         $this->save();
         $this->unreadNotifications->markAsRead();
         # code...
+    }
+
+    /**
+     * Route notifications for the Slack channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForSlack($notification)
+    {
+        return 'https://hooks.slack.com/services/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';
     }
 }
