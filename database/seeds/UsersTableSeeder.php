@@ -17,12 +17,7 @@ class UsersTableSeeder extends Seeder
         $faker = app(Faker\Generator::class);
         // 头像假数据
         $avatars = [
-            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/s5ehp11z6s.png',
-            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/Lhd1SHqu86.png',
-            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/LOnMrqbHJn.png',
-            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/xAuDMxteQy.png',
-            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/ZqM7iaP4CR.png',
-            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/NDnzMutoxX.png',
+            'http://larabbs.test/uploads/images/avatars/202005/20/6_1589967799-fzTORimWEp.jpg',
         ];
         // 生成数据集合
         $users = factory(User::class)
