@@ -2,6 +2,8 @@
 
 namespace App\Observers;
 
+use App\Handlers\SlugTranslateHandler;
+use App\Jobs\TranslateSlug;
 use App\Models\Topic;
 use Illuminate\Support\Facades\Log;
 use Mews\Purifier\Facades\Purifier;
@@ -24,9 +26,12 @@ class TopicObserver
 
     public function saving(Topic $topic)
     {
-        Log::error('Purifier are cleaning the content ');
         $topic->body =  Purifier::clean($topic->body, 'user_topic_body');
-        Log::error($topic->body);
         $topic->excerpt = make_excerpt($topic->body);
+    }
+
+    public function saved(Topic $topic)
+    {
+        dispatch(new TranslateSlug($topic));
     }
 }
