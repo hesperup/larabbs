@@ -130,3 +130,17 @@ simditor-body img {
     color: #b3b3b3;
   }
 }
+
+/* 消息通知 */
+.notification-badge {
+  .badge {
+    font-size: 12px;
+    margin-top: 14px;
+  }
+  .badge-secondary {
+    background-color: #ebe8e8;
+  }
+  .badge-hint {
+    background-color: #d15b47 !important;
+  }
+}
