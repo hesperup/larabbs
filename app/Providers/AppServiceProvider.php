@@ -17,6 +17,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        if (app()->isLocal()) {
+            $this->app->register(\VIACreative\SudoSu\ServiceProvider::class);
+        }
     }
 
     /**
@@ -25,9 +28,9 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-	{
-		\App\User::observe(\App\Observers\UserObserver::class);
-		\App\Models\Topic::observe(\App\Observers\TopicObserver::class);
+    {
+        \App\User::observe(\App\Observers\UserObserver::class);
+        \App\Models\Topic::observe(\App\Observers\TopicObserver::class);
         Reply::observe(ReplyObserver::class);
         //
         Carbon::setLocale("zh");

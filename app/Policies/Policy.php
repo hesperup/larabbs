@@ -14,9 +14,12 @@ class Policy
     }
 
     public function before($user, $ability)
-	{
-	    // if ($user->isSuperAdmin()) {
-	    // 		return true;
-	    // }
-	}
+    {
+        // if ($user->isSuperAdmin()) {
+        // 		return true;
+        // }
+        if ($user->can('manage_content')) {
+            return true;
+        }
+    }
 }
