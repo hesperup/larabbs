@@ -4,6 +4,8 @@ namespace App;
 
 use App\Models\Reply;
 use App\Models\Topic;
+use App\Models\Traits\ActiveUserHelper;
+use App\Models\Traits\LastActivedAtHelper;
 use DateTimeInterface;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
@@ -14,7 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmailContract
 {
-    use  MustVerifyEmailTrait, HasRoles;
+    use  MustVerifyEmailTrait, HasRoles,ActiveUserHelper,LastActivedAtHelper;
     use Notifiable {
         notify as protected laravelNotify;
     }
