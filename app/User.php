@@ -13,10 +13,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Str;
 
-class User extends Authenticatable implements MustVerifyEmailContract
+class User extends Authenticatable implements MustVerifyEmailContract, JWTSubject
 {
-    use  MustVerifyEmailTrait, HasRoles,ActiveUserHelper,LastActivedAtHelper;
+    use  MustVerifyEmailTrait, HasRoles, ActiveUserHelper, LastActivedAtHelper;
     use Notifiable {
         notify as protected laravelNotify;
     }
@@ -26,7 +28,8 @@ class User extends Authenticatable implements MustVerifyEmailContract
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'introduction', "avatar",'phone',
+        'name', 'email', 'password', 'introduction', "avatar", 'phone',
+        'weixin_openid', 'weixin_unionid'
     ];
 
     /**
@@ -120,10 +123,21 @@ class User extends Authenticatable implements MustVerifyEmailContract
     public function setAvatarAttribute($path)
     {
         // 如果不是 `http` 子串开头，那就是从后台上传的，需要补全 URL
-        if (!\Str::startsWith($path, 'http')) {
+        if (!Str::startsWith($path, 'http')) {
             // 拼接完整的 URL
             $path = config('app.url') . "/uploads/images/avatars/$path";
         }
         $this->attributes['avatar'] = $path;
+    }
+
+    public function getJWTIdentifier()
+    {
+        # code...
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
