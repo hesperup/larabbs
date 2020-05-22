@@ -26,9 +26,19 @@ $api->version(
         'namespace' => 'App\Http\Controllers\Api'
     ],
     function ($api) {
-        $api->post('verificationCodes', 'VerificationCodesController@store')
-            ->name('api.verficationCodes.stote');
-        $api->post('users','UsersController@store')
-        ->name('api.users.store');
+        # code.
+        $api->group(
+            [
+                'middleware' => 'api.throttle',
+                'limit' => config('api.rate_limits.sign.limit'),
+                'expires' => config('api.rate_limits.sign.expires'),
+            ],
+            function ($api) {
+                $api->post('verificationCodes', 'VerificationCodesController@store')
+                    ->name('api.verficationCodes.stote');
+                $api->post('users', 'UsersController@store')
+                    ->name('api.users.store');
+            }
+        );
     }
 );
