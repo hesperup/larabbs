@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,8 @@ $api->version(
     ],
     function ($api) {
         $api->post('verificationCodes', 'VerificationCodesController@store')
-        ->name('api.verficationCodes.stote');
+            ->name('api.verficationCodes.stote');
+        $api->post('users','UsersController@store')
+        ->name('api.users.store');
     }
 );
