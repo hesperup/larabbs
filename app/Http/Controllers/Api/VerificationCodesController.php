@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\VerificationCodeRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Overtrue\EasySms\EasySms;
 use Overtrue\EasySms\Exceptions\NoGatewayAvailableException;
 use  Illuminate\Support\Str;
@@ -15,6 +15,18 @@ class VerificationCodesController extends Controller
     //
     public function store(VerificationCodeRequest $req, EasySms $easySms)
     {
+        $captchaData = Cache::get($req->captcha_key);
+        if (!$captchaData) {
+            return $this->response->error('图片验证码已失效', 403);
+        }
+        // Log::error($captchaData['code']);
+        // Log::error($req->captcha_code);
+        if (!hash_equals(Str::lower($captchaData['code']), Str::lower($req->captcha_code))) {
+            // 验证错误就清除缓存
+            Cache::forget($req->captcha_key);
+            return $this->response->errorUnauthorized('验证码错误', 401);
+        }
+
         $phone = $req->phone;
         if (!app()->environment('production')) {
             $code = '1111';

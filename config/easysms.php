@@ -1,4 +1,3 @@
-touch config/easysms.php
 <?php
 return [
     // HTTP 请求的超时时间（秒）
