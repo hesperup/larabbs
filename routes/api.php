@@ -98,5 +98,8 @@ $api->version(
 
         $api->get('users/{user}/topics', 'TopicsController@userIndex')
             ->name('api.users.topics.index');
+
+        $api->get('topics/{topic}', 'TopicsController@show')
+            ->name('api.topics.show');
     }
 );
