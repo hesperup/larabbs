@@ -7,6 +7,7 @@ use App\Models\Reply;
 use App\Observers\LinkObserver;
 use App\Observers\ReplyObserver;
 use Carbon\Carbon;
+use Dingo\Api\Facade\API;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +23,12 @@ class AppServiceProvider extends ServiceProvider
         if (app()->isLocal()) {
             $this->app->register(\VIACreative\SudoSu\ServiceProvider::class);
         }
+        API::error(function (\Illuminate\Database\Eloquent\Model $model) {
+            abort(404);
+        });
+        API::error(function (\Illuminate\Auth\Access\AuthorizationException $exception) {
+            abort(403, $exception->getMessage());
+        });
     }
 
     /**
