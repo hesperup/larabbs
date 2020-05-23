@@ -101,6 +101,11 @@ $api->version(
             // 某个用户的回复列表
             $api->get('users/{user}/replies', 'RepliesController@userIndex')
                 ->name('api.users.replies.index');
+
+
+            // 通知列表
+            $api->get('user/notifications', 'NotificationsController@index')
+                ->name('api.user.notifications.index');
         });
 
         // 游客可以访问的接口
