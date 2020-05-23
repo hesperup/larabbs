@@ -25,7 +25,7 @@ $api->version(
     'v1',
     [
         'namespace' => 'App\Http\Controllers\Api',
-        // 'middleware' => ['serializer:array', 'bindings']
+        //  'middleware' => ['serializer:array', 'bindings']
     ],
     function ($api) {
         # code.
@@ -87,6 +87,9 @@ $api->version(
                 ->name('api.topics.update');
             $api->delete('topics/{topic}', 'TopicsController@destroy')
                 ->name('api.topics.destroy');
+
+            $api->post('topics/{topic}/replies', 'RepliesController@store')
+                ->name('api.topics.replies.store');
         });
 
         // 游客可以访问的接口
